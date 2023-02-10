@@ -1,0 +1,20 @@
+version: "3"
+services:
+  postgres:
+    image: postgres:15-alpine
+    environment:
+    - POSTGRES_PASSWORD=${DB_PASSWORD}
+    - POSTGRES_USER=${DB_USER}
+    ports:
+    - "5432:5432"
+    volumes:
+    - ./.db_data:/var/lib/postgresql/data
+    - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+  shopping-server:
+    depends_on:
+      - postgres
+    image: shopping_app:latest
+    network_mode: "host"
+    environment:
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_USER=${DB_USER}
