@@ -11,7 +11,7 @@ export class ProductSetEntry {
 
   @ApiProperty()
   @Column()
-  qtuantity: number;
+  quantity: number;
 
   @ManyToOne(() => Product)
   product: Product;

@@ -5,7 +5,7 @@ import { wait } from './utils/wait';
 import * as dotenv from 'dotenv';
 import { Product } from './entities/product.entity';
 import { ProductSet } from './entities/productSet.entity';
-import { ProductSetEntry } from './entities/productSetItem.entity';
+import { ProductSetEntry } from './entities/productSetEntry.entity';
 import { Discount } from './entities/discount.entity';
 dotenv.config();
 

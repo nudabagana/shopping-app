@@ -1,11 +1,11 @@
 import { ApiProperty } from '@nestjs/swagger';
 
-export class CartItem {
+export class CartProduct {
   @ApiProperty() productUuid: string;
   @ApiProperty() count: number;
 }
 
 export class Cart {
-  @ApiProperty({ type: [CartItem] })
-  products: CartItem[];
+  @ApiProperty({ type: [CartProduct] })
+  products: CartProduct[];
 }

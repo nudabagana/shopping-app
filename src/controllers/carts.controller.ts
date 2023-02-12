@@ -1,7 +1,5 @@
-import { Body, Controller, HttpStatus, Post, Res } from '@nestjs/common';
+import { Body, Controller, HttpStatus, Post } from '@nestjs/common';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
-import { Response } from 'express';
-import { Product } from 'src/entities/product.entity';
 import cartService from 'src/services/cart.service';
 import { Cart } from 'src/types/cart';
 
@@ -9,15 +7,13 @@ import { Cart } from 'src/types/cart';
 @Controller('Carts')
 class CartsController {
   @ApiResponse({
-    type: Product,
-    status: HttpStatus.OK,
+    type: Number,
+    status: HttpStatus.CREATED,
     description: 'Successful operation',
   })
   @Post('/total')
-  async create(@Res() response: Response, @Body() cart: Cart) {
-    return response
-      .status(HttpStatus.OK)
-      .send(cartService.calcTotal(cart.products));
+  async total(@Body() cart: Cart) {
+    return cartService.calcTotal(cart.products);
   }
 }
 

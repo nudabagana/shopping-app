@@ -1,17 +1,10 @@
 import { getConnection } from 'src/dbConnection';
-import { Product, ProductBase } from 'src/entities/product.entity';
+import { ProductSet } from 'src/entities/productSet.entity';
 import { In } from 'typeorm';
 
-const getRepo = async () => (await getConnection()).getRepository(Product);
+const getRepo = async () => (await getConnection()).getRepository(ProductSet);
 
-const add = async (item: ProductBase): Promise<Product> => {
-  const repo = await getRepo();
-  const savedItem = await repo.save(item);
-
-  return savedItem;
-};
-
-const addWithId = async (item: Product[]) => {
+const addWithId = async (item: ProductSet[]) => {
   const repo = await getRepo();
   const savedItems = await repo.save(item);
 
@@ -50,6 +43,5 @@ export default {
   getByUuid,
   getAllByUuids,
   removeByUuid,
-  add,
   addWithId,
 };

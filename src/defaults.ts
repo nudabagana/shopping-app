@@ -1,0 +1,83 @@
+import {
+  Discount,
+  DiscountCondition,
+  DiscountType,
+} from './entities/discount.entity';
+import { Product } from './entities/product.entity';
+import { ProductSet } from './entities/productSet.entity';
+import { ProductSetEntry } from './entities/productSetEntry.entity';
+import { SAME_TYPE_PRODUCT } from './services/cart.service';
+import discountsService from './services/discounts.service';
+import productsService from './services/products.service';
+import productSetEntriesService from './services/productSetEntries.service';
+import productSetsService from './services/productSets.service';
+
+const DEFAULT_PRODUCTS: Product[] = [SAME_TYPE_PRODUCT];
+
+const SAME_5_ITEM_SET = { uuid: 'fb48851a-e2ca-412f-906e-8b16ac011111' };
+const DEFAULT_PRODUCT_SETS: ProductSet[] = [SAME_5_ITEM_SET];
+const DEFAULT_PRODUCT_SET_ENTRIES: ProductSetEntry[] = [
+  {
+    product: SAME_TYPE_PRODUCT,
+    uuid: 'fb48851a-e2ca-412f-906e-8b16ac010000',
+    quantity: 5,
+    productSet: SAME_5_ITEM_SET,
+  },
+];
+const DEFAULT_DISCOUNTS: Discount[] = [
+  {
+    priority: 1000,
+    isActive: true,
+    type: DiscountType.ITEMS,
+    uuid: 'fb48851a-e2ca-412f-906e-8b16ac012222',
+    resultCondition: DiscountCondition.LESS_PRC,
+    resultAmount: 0.2,
+    productSet: SAME_5_ITEM_SET,
+  },
+  {
+    priority: 999,
+    isActive: true,
+    type: DiscountType.TOTAL_MORE,
+    amount: 19.99,
+    uuid: 'fb48851a-e2ca-412f-906e-8b16ac013333',
+    resultCondition: DiscountCondition.LESS,
+    resultAmount: 1,
+  },
+];
+
+type CreateProps<T> = {
+  service: {
+    getAllByUuids: (uuids: string[]) => Promise<T[]>;
+    addWithId: (item: T[]) => Promise<T[]>;
+  };
+  items: T[];
+};
+
+const createItems = async <T extends { uuid: string }>({
+  service,
+  items,
+}: CreateProps<T>) => {
+  const existing = await service.getAllByUuids(items.map(({ uuid }) => uuid));
+  const existingUuids = existing.map(({ uuid }) => uuid);
+  const toCreate = items.filter(({ uuid }) => !existingUuids.includes(uuid));
+
+  await service.addWithId(toCreate);
+};
+
+const create = async () => {
+  await createItems({ service: productsService, items: DEFAULT_PRODUCTS });
+  await createItems({
+    service: productSetsService,
+    items: DEFAULT_PRODUCT_SETS,
+  });
+  await createItems({
+    service: productSetEntriesService,
+    items: DEFAULT_PRODUCT_SET_ENTRIES,
+  });
+  await createItems({
+    service: discountsService,
+    items: DEFAULT_DISCOUNTS,
+  });
+};
+
+export default { create };

@@ -1,9 +1,9 @@
-import 'reflect-metadata';
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import 'reflect-metadata';
 import { AppModule } from './app.module';
 import { dbConnect } from './dbConnection';
-import productsService from './services/products.service';
+import defaults from './defaults';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -17,6 +17,7 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('docs', app, document);
   await dbConnect();
+  await defaults.create();
 
   await app.listen(3000);
 }

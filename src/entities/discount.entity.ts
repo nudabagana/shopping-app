@@ -4,7 +4,8 @@ import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { ProductSet } from './productSet.entity';
 
 export enum DiscountType {
-  TOTAL = 'total',
+  TOTAL_MORE = 'total_more',
+  TOTAL_LESS = 'total_less',
   ITEMS = 'items',
 }
 
@@ -24,13 +25,12 @@ export class Discount {
   @Column({ default: 0 })
   priority: number;
 
+  @Column({ default: true })
+  isActive: boolean;
+
   @ApiProperty()
   @Column({ type: 'enum', enum: DiscountType })
   type: DiscountType;
-
-  @ApiProperty()
-  @Column({ type: 'enum', enum: DiscountCondition })
-  condition: DiscountCondition;
 
   @ApiProperty()
   @Column({ type: 'enum', enum: DiscountCondition })
@@ -39,12 +39,9 @@ export class Discount {
   @Column({ type: 'numeric', nullable })
   amount?: number;
 
-  @Column({ type: 'numeric', nullable })
-  resultAmount?: number;
+  @Column({ type: 'numeric' })
+  resultAmount: number;
 
   @ManyToOne(() => ProductSet, { nullable })
   productSet?: ProductSet;
-
-  @ManyToOne(() => ProductSet, { nullable })
-  resultProductSet?: ProductSet;
 }

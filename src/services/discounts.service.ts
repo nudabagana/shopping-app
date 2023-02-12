@@ -1,26 +1,27 @@
 import { getConnection } from 'src/dbConnection';
-import { Product, ProductBase } from 'src/entities/product.entity';
+import { Discount } from 'src/entities/discount.entity';
 import { In } from 'typeorm';
 
-const getRepo = async () => (await getConnection()).getRepository(Product);
+const getRepo = async () => (await getConnection()).getRepository(Discount);
 
-const add = async (item: ProductBase): Promise<Product> => {
-  const repo = await getRepo();
-  const savedItem = await repo.save(item);
-
-  return savedItem;
-};
-
-const addWithId = async (item: Product[]) => {
+const addWithId = async (item: Discount[]) => {
   const repo = await getRepo();
   const savedItems = await repo.save(item);
 
   return savedItems;
 };
 
-const getAll = async () => {
+const getAllOrdered = async () => {
   const repo = await getRepo();
-  return repo.find();
+  return repo.find({
+    relations: [
+      'productSet',
+      'productSet.productSetItems',
+      'productSet.productSetItems.product',
+    ],
+    order: { priority: 'DESC' },
+    where: { isActive: true },
+  });
 };
 
 const getAllByUuids = async (uuids: string[]) => {
@@ -46,10 +47,9 @@ const removeByUuid = async (uuid: string) => {
 };
 
 export default {
-  getAll,
+  getAllOrdered,
   getByUuid,
   getAllByUuids,
   removeByUuid,
-  add,
   addWithId,
 };

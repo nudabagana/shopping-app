@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
-import { ProductSetEntry } from './productSetItem.entity';
+import { ProductSetEntry } from './productSetEntry.entity';
 
 @Entity()
 export class ProductSet {
@@ -9,5 +9,5 @@ export class ProductSet {
   uuid: string;
 
   @OneToMany(() => ProductSetEntry, (entry) => entry.productSet)
-  productSetItems: ProductSet;
+  productSetItems?: ProductSetEntry[];
 }
