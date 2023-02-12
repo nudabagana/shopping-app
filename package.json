@@ -12,6 +12,7 @@
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
+    "docker:build": "docker build -t shopping_app:latest  .",
     "docker:start": "docker-compose -f ./docker-compose.yml up",
     "docker:start-db": "docker-compose -f ./docker-compose-dbonly.yml up",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",

@@ -5,10 +5,13 @@ import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 export class ProductBase {
   @ApiProperty()
   name: string;
+
   @ApiProperty()
   description: string;
+
   @ApiProperty({ nullable })
   imgUrl?: string;
+
   @ApiProperty()
   price: number;
 }
