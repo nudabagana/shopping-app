@@ -5,14 +5,23 @@ Shopping app for Revel Systems interview
 ## Running the app
 
 1. Make sure you have [Docker](https://docs.docker.com/get-docker/) and [docker-compose](https://docs.docker.com/compose/install/) installed.
-2. Then copy .env and fill it:
+2. Clone this repo and open it.
 
 ```bash
-# copy .env and
+# clone repo
+git clone git@github.com:nudabagana/shopping-app.git
+# open it
+cd shopping-app
+```
+
+3.  Then copy .env and fill it:
+
+```bash
+# copy .env
 cp .env.example .env
 ```
 
-3. Build docker container and run it.
+4. Build docker container and run it.
 
 ```bash
 # build docker image
@@ -22,7 +31,7 @@ $ yarn docker:build
 $ yarn docker:run
 ```
 
-4. Open `http://localhost:3000/docs` to see Swagger.
+5. Open `http://localhost:3000/docs` to see Swagger.
 
 ## Usage
 
