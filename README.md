@@ -25,10 +25,10 @@ cp .env.example .env
 
 ```bash
 # build docker image
-$ yarn docker:build
+yarn docker:build
 
 # run service + db
-$ yarn docker:start
+yarn docker:start
 ```
 
 5. Open `http://localhost:3000/docs` to see Swagger.
@@ -75,7 +75,7 @@ yarn docker:start-db
 2. Yarn install and run server in dev mode.
 
 ```bash
-# install
+# install (requires Node 16+)
 yarn install
 
 #run dev
@@ -85,9 +85,12 @@ yarn start:dev
 ## Test
 
 ```bash
+# install (requires Node 16+)
+yarn install
+
 # unit tests
-$ yarn run test
+yarn test
 
 # test coverage
-$ yarn run test:cov
+yarn test:cov
 ```

@@ -12,7 +12,7 @@ services:
     - ./init.sql:/docker-entrypoint-initdb.d/init.sql
     healthcheck:
       test: ["CMD-SHELL", "pg_isready", "-d", "shoppingdb"]
-      interval: 5s
+      interval: 10s
       timeout: 10s
       retries: 5
       start_period: 0s  
