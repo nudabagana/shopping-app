@@ -66,9 +66,10 @@ const getProductsDiscount = ({
       total + discountQty * setCount * item.product.price,
     0,
   );
+
   return calcDiscount({
     currTotal: totalForDiscount,
-    resultAmount,
+    resultAmount: setCount === 0 ? 0 : resultAmount,
     resultCondition,
   });
 };
@@ -95,6 +96,7 @@ const getSameProductsDiscount = ({
       resultAmount,
       resultCondition,
     });
+
     return discount + discountTotal;
   }, 0);
 };
