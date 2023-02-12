@@ -1,3 +1,4 @@
+import { NotFoundException } from '@nestjs/common';
 import { getConnection } from 'src/dbConnection';
 import { Product, ProductBase } from 'src/entities/product.entity';
 import { In } from 'typeorm';
@@ -30,7 +31,11 @@ const getAllByUuids = async (uuids: string[]) => {
 
 const getByUuid = async (uuid: string) => {
   const repo = await getRepo();
-  return repo.findOne({ where: { uuid } });
+  const item = await repo.findOne({ where: { uuid } });
+  if (!item) {
+    throw new NotFoundException();
+  }
+  return item;
 };
 
 const removeByUuid = async (uuid: string) => {
@@ -39,7 +44,7 @@ const removeByUuid = async (uuid: string) => {
   if (item) {
     await repo.remove(item);
   } else {
-    throw new Error('No entity found');
+    throw new NotFoundException();
   }
 
   return true;

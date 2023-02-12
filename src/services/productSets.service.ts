@@ -1,8 +1,16 @@
+import { NotFoundException } from '@nestjs/common';
 import { getConnection } from 'src/dbConnection';
-import { ProductSet } from 'src/entities/productSet.entity';
+import { ProductSet, ProductSetBase } from 'src/entities/productSet.entity';
 import { In } from 'typeorm';
 
 const getRepo = async () => (await getConnection()).getRepository(ProductSet);
+
+const add = async (item: ProductSetBase) => {
+  const repo = await getRepo();
+  const savedItem = await repo.save(item);
+
+  return savedItem;
+};
 
 const addWithId = async (item: ProductSet[]) => {
   const repo = await getRepo();
@@ -23,7 +31,11 @@ const getAllByUuids = async (uuids: string[]) => {
 
 const getByUuid = async (uuid: string) => {
   const repo = await getRepo();
-  return repo.findOne({ where: { uuid } });
+  const item = await repo.findOne({ where: { uuid } });
+  if (!item) {
+    throw new NotFoundException();
+  }
+  return item;
 };
 
 const removeByUuid = async (uuid: string) => {
@@ -32,7 +44,7 @@ const removeByUuid = async (uuid: string) => {
   if (item) {
     await repo.remove(item);
   } else {
-    throw new Error('No entity found');
+    throw new NotFoundException();
   }
 
   return true;
@@ -44,4 +56,5 @@ export default {
   getAllByUuids,
   removeByUuid,
   addWithId,
+  add,
 };

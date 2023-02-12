@@ -1,8 +1,16 @@
+import { NotFoundException } from '@nestjs/common';
 import { getConnection } from 'src/dbConnection';
-import { Discount } from 'src/entities/discount.entity';
+import { Discount, DiscountBase } from 'src/entities/discount.entity';
 import { In } from 'typeorm';
 
 const getRepo = async () => (await getConnection()).getRepository(Discount);
+
+const add = async (item: DiscountBase) => {
+  const repo = await getRepo();
+  const savedItem = await repo.save(item);
+
+  return savedItem;
+};
 
 const addWithId = async (item: Discount[]) => {
   const repo = await getRepo();
@@ -31,7 +39,18 @@ const getAllByUuids = async (uuids: string[]) => {
 
 const getByUuid = async (uuid: string) => {
   const repo = await getRepo();
-  return repo.findOne({ where: { uuid } });
+  const item = await repo.findOne({
+    where: { uuid },
+    relations: [
+      'productSet',
+      'productSet.productSetItems',
+      'productSet.productSetItems.product',
+    ],
+  });
+  if (!item) {
+    throw new NotFoundException();
+  }
+  return item;
 };
 
 const removeByUuid = async (uuid: string) => {
@@ -40,7 +59,7 @@ const removeByUuid = async (uuid: string) => {
   if (item) {
     await repo.remove(item);
   } else {
-    throw new Error('No entity found');
+    throw new NotFoundException();
   }
 
   return true;
@@ -52,4 +71,5 @@ export default {
   getAllByUuids,
   removeByUuid,
   addWithId,
+  add,
 };

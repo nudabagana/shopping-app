@@ -4,13 +4,21 @@ import {
   Delete,
   Get,
   HttpStatus,
+  InternalServerErrorException,
+  NotFoundException,
   Param,
   Post,
 } from '@nestjs/common';
-import { ApiResponse, ApiTags } from '@nestjs/swagger';
+import {
+  ApiInternalServerErrorResponse,
+  ApiNotFoundResponse,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 import { Product, ProductBase } from 'src/entities/product.entity';
 import productsService from 'src/services/products.service';
 
+@ApiInternalServerErrorResponse({ type: InternalServerErrorException })
 @ApiTags('Products')
 @Controller('Products')
 class ProductsController {
@@ -30,17 +38,18 @@ class ProductsController {
     description: 'Successful operation',
   })
   @Get('/')
-  async getOne() {
+  async getAll() {
     return productsService.getAll();
   }
 
   @ApiResponse({
-    type: [Product],
+    type: Product,
     status: HttpStatus.OK,
     description: 'Successful operation',
   })
+  @ApiNotFoundResponse({ type: NotFoundException })
   @Get('/:uuid')
-  async getAll(@Param('uuid') uuid: string) {
+  async getOne(@Param('uuid') uuid: string) {
     return productsService.getByUuid(uuid);
   }
 
@@ -49,6 +58,7 @@ class ProductsController {
     status: HttpStatus.OK,
     description: 'Successful operation',
   })
+  @ApiNotFoundResponse({ type: NotFoundException })
   @Delete('/:uuid')
   async remove(@Param('uuid') uuid: string) {
     return productsService.removeByUuid(uuid);

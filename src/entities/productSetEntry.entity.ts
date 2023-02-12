@@ -1,10 +1,18 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
-import { Product } from './product.entity';
+import { Product, ProductBase } from './product.entity';
 import { ProductSet } from './productSet.entity';
 
+export class ProductSetEntryBase {
+  @ApiProperty()
+  quantity: number;
+
+  @ApiProperty({ type: ProductBase })
+  product: ProductBase;
+}
+
 @Entity()
-export class ProductSetEntry {
+export class ProductSetEntry extends ProductSetEntryBase {
   @ApiProperty()
   @PrimaryGeneratedColumn('uuid')
   uuid: string;
@@ -13,7 +21,8 @@ export class ProductSetEntry {
   @Column()
   quantity: number;
 
-  @ManyToOne(() => Product)
+  @ApiProperty({ type: Product })
+  @ManyToOne(() => Product, { cascade: true })
   product: Product;
 
   @ManyToOne(() => ProductSet)

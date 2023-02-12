@@ -6,33 +6,52 @@ import {
 import { Product } from './entities/product.entity';
 import { ProductSet } from './entities/productSet.entity';
 import { ProductSetEntry } from './entities/productSetEntry.entity';
-import { SAME_TYPE_PRODUCT } from './services/cart.service';
 import discountsService from './services/discounts.service';
 import productsService from './services/products.service';
 import productSetEntriesService from './services/productSetEntries.service';
 import productSetsService from './services/productSets.service';
 
-const DEFAULT_PRODUCTS: Product[] = [SAME_TYPE_PRODUCT];
-
-const SAME_5_ITEM_SET = { uuid: 'fb48851a-e2ca-412f-906e-8b16ac011111' };
-const DEFAULT_PRODUCT_SETS: ProductSet[] = [SAME_5_ITEM_SET];
-const DEFAULT_PRODUCT_SET_ENTRIES: ProductSetEntry[] = [
+const DEFAULT_PRODUCTS: Product[] = [
   {
-    product: SAME_TYPE_PRODUCT,
-    uuid: 'fb48851a-e2ca-412f-906e-8b16ac010000',
-    quantity: 5,
-    productSet: SAME_5_ITEM_SET,
+    uuid: 'fb48851a-e2ca-412f-906e-8b16ac012220',
+    name: 'Watermelon',
+    price: 2,
+    description: 'A refreshing melon-type fruit!',
+    imgUrl: 'https://i.imgur.com/bmg9jJ1.png',
+  },
+  {
+    uuid: 'fb48851a-e2ca-412f-906e-8b16ac012221',
+    name: 'Firemelon',
+    price: 10,
+    description: 'A hot and spicy melon-type fruit!',
+    imgUrl: 'https://i.imgur.com/FM6eHc3.png',
+  },
+  {
+    uuid: 'fb48851a-e2ca-412f-906e-8b16ac012222',
+    name: 'Earthmelon',
+    price: 0.5,
+    description: 'Pretty much a rock.',
+    imgUrl: 'https://i.imgur.com/d6o7xxh.png',
+  },
+  {
+    uuid: 'fb48851a-e2ca-412f-906e-8b16ac012223',
+    name: 'Airmelon',
+    price: 21,
+    description: 'Someone made you pay for air, great!',
+    imgUrl: 'https://i.imgur.com/b16qqU1.png',
   },
 ];
+const DEFAULT_PRODUCT_SETS: ProductSet[] = [];
+const DEFAULT_PRODUCT_SET_ENTRIES: ProductSetEntry[] = [];
 const DEFAULT_DISCOUNTS: Discount[] = [
   {
     priority: 1000,
     isActive: true,
-    type: DiscountType.ITEMS,
+    type: DiscountType.SAME_ITEMS,
     uuid: 'fb48851a-e2ca-412f-906e-8b16ac012222',
     resultCondition: DiscountCondition.LESS_PRC,
     resultAmount: 0.2,
-    productSet: SAME_5_ITEM_SET,
+    itemCount: 5,
   },
   {
     priority: 999,
