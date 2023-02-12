@@ -14,7 +14,7 @@ git clone git@github.com:nudabagana/shopping-app.git
 cd shopping-app
 ```
 
-3.  Then copy .env and **fill it**:
+3.  Then copy .env and **fill it** (enter any desired DB_USER and DB_PASSWORD. Database will be created with this user):
 
 ```bash
 # copy .env
