@@ -28,7 +28,7 @@ cp .env.example .env
 $ yarn docker:build
 
 # run service + db
-$ yarn docker:run
+$ yarn docker:start
 ```
 
 5. Open `http://localhost:3000/docs` to see Swagger.
