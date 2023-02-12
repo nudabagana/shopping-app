@@ -14,7 +14,7 @@ git clone git@github.com:nudabagana/shopping-app.git
 cd shopping-app
 ```
 
-3.  Then copy .env and fill it:
+3.  Then copy .env and **fill it**:
 
 ```bash
 # copy .env
@@ -37,7 +37,7 @@ $ yarn docker:run
 
 #### Products
 
-You may get/add/detele products using `/products` endpoints. 4 Default products are created on server start.
+You may create/remove/read products using `/products` endpoints. 4 Default products are created on server start.
 
 #### Carts
 
@@ -49,7 +49,7 @@ Currently cart total price has 2 limits:
 
 #### Discounts
 
-You may use `/discounts` to get/add/remove discount logic to the cart calculation. 2 default rules are created on server start:
+You may use `/discounts` to create/remove/read discount logic to the cart calculation. 2 default rules are created on server start:
 
 1. Every 5th item is free
 2. 1$ discount is applied after you spend 20$ or more.
@@ -75,7 +75,3 @@ $ yarn run test:e2e
 # test coverage
 $ yarn run test:cov
 ```
-
-## License
-
-Nest is [MIT licensed](LICENSE).
