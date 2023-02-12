@@ -63,6 +63,25 @@ Currently discount can be applied by 4 modes:
 
 Discount calc supports 4 modes: flat increase, flat decrease, percentage increase, percentage decrease.
 
+## Development
+
+1. Run db only.
+
+```bash
+# run db
+yarn docker:start-db
+```
+
+2. Yarn install and run server in dev mode.
+
+```bash
+# install
+yarn install
+
+#run dev
+yarn start:dev
+```
+
 ## Test
 
 ```bash
